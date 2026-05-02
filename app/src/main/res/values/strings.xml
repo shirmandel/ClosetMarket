@@ -1,3 +1,12 @@
 <resources>
     <string name="app_name">ClosetMarket</string>
+    <string name="tagline">Buy and sell from your closet</string>
+    <string name="login">Login</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="full_name">Full Name</string>
+    <string name="name_hint">Enter your name</string>
+    <string name="email">Email</string>
+    <string name="email_hint">Enter your email</string>
+    <string name="password">Password</string>
+    <string name="terms_text">By continuing, you agree to our Terms of Service and Privacy Policy</string>
 </resources>
