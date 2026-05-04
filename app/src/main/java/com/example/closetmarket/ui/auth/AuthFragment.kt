@@ -10,14 +10,18 @@ import android.widget.LinearLayout
 import android.widget.ProgressBar
 import android.widget.TextView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import com.example.closetmarket.R
 
 class AuthFragment : Fragment() {
 
+    private lateinit var viewModel: AuthViewModel
     private var isLoginMode = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(AuthViewModel::class.java)
     }
 
     override fun onCreateView(
@@ -41,7 +45,6 @@ class AuthFragment : Fragment() {
         val tvError = view.findViewById<TextView>(R.id.tvError)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
-        // Toggle Login / Sign Up
         btnLogin.setOnClickListener {
             isLoginMode = true
             nameContainer.visibility = View.GONE
@@ -80,6 +83,34 @@ class AuthFragment : Fragment() {
             }
 
             tvError.visibility = View.GONE
+
+            if (isLoginMode) {
+                viewModel.login(email, password)
+            } else {
+                viewModel.register(email, password, name)
+            }
+        }
+
+        // Observe ViewModel
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            btnSubmit.isEnabled = !isLoading
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                tvError.text = error
+                tvError.visibility = View.VISIBLE
+            } else {
+                tvError.visibility = View.GONE
+            }
+        }
+
+        viewModel.authSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Navigation.findNavController(view)
+                    .navigate(R.id.action_auth_to_feed)
+            }
         }
     }
 }
