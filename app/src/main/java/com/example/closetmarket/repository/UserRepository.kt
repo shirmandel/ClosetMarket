@@ -48,7 +48,7 @@ object UserRepository {
                         callback(true, null)
                     }
                     ?.addOnFailureListener {
-                        callback(true, null) // Auth succeeded, profile update is minor
+                        callback(true, null)
                     }
             }
             .addOnFailureListener { e ->

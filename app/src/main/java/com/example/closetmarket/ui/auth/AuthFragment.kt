@@ -91,7 +91,6 @@ class AuthFragment : Fragment() {
             }
         }
 
-        // Observe ViewModel
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             btnSubmit.isEnabled = !isLoading
