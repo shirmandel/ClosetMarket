@@ -11,4 +11,9 @@
     <string name="feed">Feed</string>
     <string name="profile">Profile</string>
     <string name="post">Post</string>
+    <string name="search_hint">Search for items...</string>
+    <string name="my_wishlist">My Wishlist</string>
+    <string name="no_items_found">No items found</string>
+    <string name="adjust_filters">adjust filters</string>
+    <string name="showing_items">showing %1$d items</string>
 </resources>
