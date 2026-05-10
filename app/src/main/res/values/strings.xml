@@ -8,5 +8,7 @@
     <string name="email">Email</string>
     <string name="email_hint">Enter your email</string>
     <string name="password">Password</string>
-    <string name="terms_text">By continuing, you agree to our Terms of Service and Privacy Policy</string>
+    <string name="feed">Feed</string>
+    <string name="profile">Profile</string>
+    <string name="post">Post</string>
 </resources>
