@@ -33,4 +33,9 @@
     <string name="choose_image_source">Choose Image Source</string>
     <string name="camera">Camera</string>
     <string name="gallery">Gallery</string>
+    <string name="search_hint">Search for items...</string>
+    <string name="my_wishlist">My Wishlist</string>
+    <string name="no_items_found">No items found</string>
+    <string name="adjust_filters">adjust filters</string>
+    <string name="showing_items">showing %1$d items</string>
 </resources>

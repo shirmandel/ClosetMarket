@@ -22,28 +22,28 @@
         <item>Bnei Brak</item>
     </string-array>
 
-<!--    <string-array name="categories_array">-->
-<!--        <item>All Categories</item>-->
-<!--        <item>Tops</item>-->
-<!--        <item>Bottoms</item>-->
-<!--        <item>Dresses</item>-->
-<!--        <item>Outerwear</item>-->
-<!--        <item>Shoes</item>-->
-<!--        <item>Accessories</item>-->
-<!--        <item>Other</item>-->
-<!--    </string-array>-->
+    <string-array name="categories_array">
+        <item>All Categories</item>
+        <item>Tops</item>
+        <item>Bottoms</item>
+        <item>Dresses</item>
+        <item>Outerwear</item>
+        <item>Shoes</item>
+        <item>Accessories</item>
+        <item>Other</item>
+    </string-array>
 
-<!--    <string-array name="conditions_array">-->
-<!--        <item>All Conditions</item>-->
-<!--        <item>New</item>-->
-<!--        <item>Like New</item>-->
-<!--        <item>Used</item>-->
-<!--    </string-array>-->
+    <string-array name="conditions_array">
+        <item>All Conditions</item>
+        <item>New</item>
+        <item>Like New</item>
+        <item>Used</item>
+    </string-array>
 
-<!--    <string-array name="sort_options_array">-->
-<!--        <item>Newest First</item>-->
-<!--        <item>Price: Low to High</item>-->
-<!--        <item>Price: High to Low</item>-->
-<!--    </string-array>-->
+    <string-array name="sort_options_array">
+        <item>Newest First</item>
+        <item>Price: Low to High</item>
+        <item>Price: High to Low</item>
+    </string-array>
 </resources>
 
