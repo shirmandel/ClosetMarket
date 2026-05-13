@@ -11,4 +11,26 @@
     <string name="feed">Feed</string>
     <string name="profile">Profile</string>
     <string name="post">Post</string>
+    <string name="photo">Photo</string>
+    <string name="tap_to_add_photo">Tap to add photo</string>
+    <string name="create_post">Create Post</string>
+    <string name="title">Title</string>
+    <string name="title_hint">Enter item title</string>
+    <string name="description">Description</string>
+    <string name="description_hint">Describe your item</string>
+    <string name="category">Category</string>
+    <string name="condition">Condition</string>
+    <string name="condition_new">New</string>
+    <string name="condition_like_new">Like New</string>
+    <string name="condition_used">Used</string>
+    <string name="price">Price</string>
+    <string name="free_give_away">Free (give away)</string>
+    <string name="pickup_location">Pickup Location</string>
+    <string name="street_hint">Street address</string>
+    <string name="select_city">Select City</string>
+    <string name="edit_post">Edit Post</string>
+    <string name="save">Save</string>
+    <string name="choose_image_source">Choose Image Source</string>
+    <string name="camera">Camera</string>
+    <string name="gallery">Gallery</string>
 </resources>
