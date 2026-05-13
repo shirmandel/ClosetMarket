@@ -12,9 +12,16 @@
         tools:layout="@layout/fragment_auth">
         <action
             android:id="@+id/action_auth_to_feed"
+            app:destination="@id/feedFragment"
             app:popUpTo="@id/authFragment"
             app:popUpToInclusive="true" />
     </fragment>
-    <!-- navigate to feed page -->
+
+    <fragment
+        android:id="@+id/feedFragment"
+        android:name="com.example.closetmarket.ui.feed.FeedFragment"
+        android:label="Feed"
+        tools:layout="@layout/fragment_feed">
+    </fragment>
 </navigation>
 
