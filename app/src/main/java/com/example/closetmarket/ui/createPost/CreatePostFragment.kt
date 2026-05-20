@@ -25,10 +25,11 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.closetmarket.R
 import com.example.closetmarket.repository.UserRepository
-//import com.squareup.picasso.Picasso
+import com.squareup.picasso.Picasso
 
 class CreatePostFragment : Fragment() {
 
+    private lateinit var viewModel: CreatePostViewModel
     private lateinit var cameraLauncher: ActivityResultLauncher<Void?>
     private lateinit var galleryLauncher: ActivityResultLauncher<String>
     private var selectedImageBitmap: Bitmap? = null
@@ -38,6 +39,7 @@ class CreatePostFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        viewModel = ViewModelProvider(this).get(CreatePostViewModel::class.java)
 
         cameraLauncher = registerForActivityResult(
             ActivityResultContracts.TakePicturePreview()
@@ -56,10 +58,10 @@ class CreatePostFragment : Fragment() {
             ActivityResultContracts.GetContent()
         ) { uri ->
             uri?.let {
-//                view?.findViewById<ImageView>(R.id.ivPreview)?.apply {
-//                    Picasso.get().load(uri).into(this)
-//                    visibility = View.VISIBLE
-//                }
+                view?.findViewById<ImageView>(R.id.ivPreview)?.apply {
+                    Picasso.get().load(uri).into(this)
+                    visibility = View.VISIBLE
+                }
                 view?.findViewById<LinearLayout>(R.id.imagePlaceholder)?.visibility = View.GONE
                 selectedImageBitmap = MediaStore.Images.Media.getBitmap(
                     requireActivity().contentResolver, uri
@@ -161,42 +163,41 @@ class CreatePostFragment : Fragment() {
         }
 
         // If editing, load existing item
-//        if (editItemId != null) {
-//            viewModel.loadItem(editItemId!!)
-//            viewModel.currentItem.observe(viewLifecycleOwner) { item ->
-//                if (item != null) {
-//                    etTitle.setText(item.title)
-//                    etDescription.setText(item.description)
-//                    etStreet.setText(item.street)
-//                    existingImageUrl = item.imageUrl
-//                    selectedCondition = item.condition
-//                    updateConditionButtons()
-//
-//                    if (item.price == "free") {
-//                        cbFree.isChecked = true
-//                    } else {
-//                        etPrice.setText(item.price)
-//                    }
-//
-//                    if (item.imageUrl.isNotEmpty()) {
-//                        Picasso.get().load(item.imageUrl).into(ivPreview)
-//                        ivPreview.visibility = View.VISIBLE
-//                        imagePlaceholder.visibility = View.GONE
-//                    }
-//
-//                    // Set city spinner
-//                    val cityIndex = cityList.indexOf(item.city)
-//                    if (cityIndex >= 0) spinnerCity.setSelection(cityIndex)
-//
-//                    // Set category spinner
-//                    val catValues = resources.getStringArray(R.array.categories_values_array)
-//                    val catIndex = catValues.indexOf(item.category)
-//                    if (catIndex >= 0) spinnerCategory.setSelection(catIndex)
-//                }
-//            }
-//        }
+        if (editItemId != null) {
+            viewModel.loadItem(editItemId!!)
+            viewModel.currentItem.observe(viewLifecycleOwner) { item ->
+                if (item != null) {
+                    etTitle.setText(item.title)
+                    etDescription.setText(item.description)
+                    etStreet.setText(item.street)
+                    existingImageUrl = item.imageUrl
+                    selectedCondition = item.condition
+                    updateConditionButtons()
 
-        // Submit
+                    if (item.price == "free") {
+                        cbFree.isChecked = true
+                    } else {
+                        etPrice.setText(item.price)
+                    }
+
+                    if (item.imageUrl.isNotEmpty()) {
+                        Picasso.get().load(item.imageUrl).into(ivPreview)
+                        ivPreview.visibility = View.VISIBLE
+                        imagePlaceholder.visibility = View.GONE
+                    }
+
+                    // Set city spinner
+                    val cityIndex = cityList.indexOf(item.city)
+                    if (cityIndex >= 0) spinnerCity.setSelection(cityIndex)
+
+                    // Set category spinner
+                    val catValues = resources.getStringArray(R.array.categories_values_array)
+                    val catIndex = catValues.indexOf(item.category)
+                    if (catIndex >= 0) spinnerCategory.setSelection(catIndex)
+                }
+            }
+        }
+
         btnPost.setOnClickListener {
             val title = etTitle.text.toString().trim()
             val description = etDescription.text.toString().trim()
@@ -215,6 +216,40 @@ class CreatePostFragment : Fragment() {
             if (user == null) {
                 Toast.makeText(requireContext(), "Not logged in", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
+            }
+
+            viewModel.submitPost(
+                title = title,
+                description = description,
+                category = category,
+                condition = selectedCondition,
+                price = price,
+                isFree = isFree,
+                city = city,
+                street = street,
+                imageBitmap = selectedImageBitmap,
+                existingImageUrl = existingImageUrl,
+                userId = user.uid,
+                userName = user.displayName,
+                editItemId = editItemId
+            )
+        }
+
+        viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
+            progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
+            btnPost.isEnabled = !isLoading
+        }
+
+        viewModel.postSuccess.observe(viewLifecycleOwner) { success ->
+            if (success) {
+                Toast.makeText(requireContext(), "Item saved!", Toast.LENGTH_SHORT).show()
+                Navigation.findNavController(view).popBackStack()
+            }
+        }
+
+        viewModel.errorMessage.observe(viewLifecycleOwner) { error ->
+            if (error != null) {
+                Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
         }
     }
