@@ -23,5 +23,16 @@
         android:label="Feed"
         tools:layout="@layout/fragment_feed">
     </fragment>
+
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.closetmarket.ui.createPost.CreatePostFragment"
+        android:label="Create Post"
+        tools:layout="@layout/fragment_create_post">
+        <argument
+            android:name="editItemId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 </navigation>
 
