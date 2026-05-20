@@ -28,16 +28,16 @@
 
     </fragment>
 
-<!--    <fragment-->
-<!--        android:id="@+id/createPostFragment"-->
-<!--        android:name="com.example.closetmarket.ui.createpost.CreatePostFragment"-->
-<!--        android:label="Create Post"-->
-<!--        tools:layout="@layout/fragment_create_post">-->
-<!--        <argument-->
-<!--            android:name="editItemId"-->
-<!--            app:argType="string"-->
-<!--            android:defaultValue="" />-->
-<!--    </fragment>-->
+    <fragment
+        android:id="@+id/createPostFragment"
+        android:name="com.example.closetmarket.ui.createPost.CreatePostFragment"
+        android:label="Create Post"
+        tools:layout="@layout/fragment_create_post">
+        <argument
+            android:name="editItemId"
+            app:argType="string"
+            android:defaultValue="" />
+    </fragment>
 
     <fragment
         android:id="@+id/profileFragment"
@@ -69,16 +69,6 @@
             android:id="@+id/action_details_to_editPost"
             app:destination="@id/createPostFragment" />
     </fragment>
-
-<!--    <fragment-->
-<!--        android:id="@+id/wishlistFragment"-->
-<!--        android:name="com.example.closetmarket.ui.wishlist.WishlistFragment"-->
-<!--        android:label="Wishlist"-->
-<!--        tools:layout="@layout/fragment_wishlist">-->
-<!--        <action-->
-<!--            android:id="@+id/action_wishlist_to_details"-->
-<!--            app:destination="@id/itemDetailsFragment" />-->
-<!--    </fragment>-->
 
     <fragment
         android:id="@+id/editProfileFragment"
