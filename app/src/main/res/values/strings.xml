@@ -38,4 +38,14 @@
     <string name="no_items_found">No items found</string>
     <string name="adjust_filters">adjust filters</string>
     <string name="showing_items">showing %1$d items</string>
+    <string name="item_details">Item Details</string>
+    <string name="description">Description</string>
+    <string name="pickup_location_label">Pickup Location</string>
+    <string name="posted_by">Posted by</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="contact_seller">Contact Seller</string>
+    <string name="free_label">Free label</string>
+    <string name="contact_seller_msg">Contact seller</string>
+
 </resources>
