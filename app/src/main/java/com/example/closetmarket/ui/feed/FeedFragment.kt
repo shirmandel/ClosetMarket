@@ -15,11 +15,13 @@ import android.widget.Spinner
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.Navigation
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import com.example.closetmarket.R
 import com.example.closetmarket.model.ClothingItem
+
 
 class FeedFragment : Fragment() {
 
@@ -64,7 +66,7 @@ class FeedFragment : Fragment() {
         adapter.setOnItemClickListener(object : ClothingItemAdapter.OnItemClickListener {
             override fun onItemClick(item: ClothingItem) {
                 val bundle = Bundle().apply { putString("itemId", item.id) }
-//                todo: navigate to item details
+                Navigation.findNavController(view).navigate(R.id.action_feed_to_details, bundle)
             }
 
             override fun onWishlistToggle(itemId: String) {

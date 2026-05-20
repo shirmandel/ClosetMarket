@@ -8,8 +8,8 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.closetmarket.R
-import com.example.closetmarket.model.ClothingItem
 import com.squareup.picasso.Picasso
+import com.example.closetmarket.model.ClothingItem
 
 class ClothingItemAdapter : RecyclerView.Adapter<ClothingItemAdapter.ItemViewHolder>() {
 

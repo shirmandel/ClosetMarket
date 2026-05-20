@@ -1,7 +1,11 @@
 package com.example.closetmarket.model
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
+
+@Entity(tableName = "clothing_items")
 data class ClothingItem(
-    val id: String = "",
+    @PrimaryKey val id: String = "",
     val title: String = "",
     val description: String = "",
     val imageUrl: String = "",
@@ -16,3 +20,4 @@ data class ClothingItem(
     val isWishlisted: Boolean = false,
     val lastUpdated: Long? = null
 )
+
