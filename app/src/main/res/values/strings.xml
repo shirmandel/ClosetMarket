@@ -27,6 +27,8 @@
     <string name="free_give_away">Free (give away)</string>
     <string name="pickup_location">Pickup Location</string>
     <string name="street_hint">Street address</string>
+    <string name="city_hint">Search city…</string>
+    <string name="location_hint">Search for address…</string>
     <string name="select_city">Select City</string>
     <string name="edit_post">Edit Post</string>
     <string name="save">Save</string>
@@ -39,7 +41,6 @@
     <string name="adjust_filters">adjust filters</string>
     <string name="showing_items">showing %1$d items</string>
     <string name="item_details">Item Details</string>
-    <string name="description">Description</string>
     <string name="pickup_location_label">Pickup Location</string>
     <string name="posted_by">Posted by</string>
     <string name="edit">Edit</string>
