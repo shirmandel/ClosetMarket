@@ -253,6 +253,11 @@ class CreatePostFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             btnPost.isEnabled = !isLoading
+            if (isLoading) {
+                btnPost.text = ""
+            } else {
+                btnPost.text = if (editItemId != null) getString(R.string.save) else getString(R.string.post)
+            }
         }
 
         viewModel.postSuccess.observe(viewLifecycleOwner) { success ->
