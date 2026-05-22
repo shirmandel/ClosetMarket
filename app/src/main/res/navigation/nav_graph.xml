@@ -22,6 +22,10 @@
         android:name="com.example.closetmarket.ui.feed.FeedFragment"
         android:label="Feed"
         tools:layout="@layout/fragment_feed">
+        <action
+            android:id="@+id/action_feed_to_details"
+            app:destination="@id/itemDetailsFragment" />
+
     </fragment>
 
     <fragment
@@ -34,5 +38,43 @@
             app:argType="string"
             android:defaultValue="" />
     </fragment>
+
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.example.closetmarket.ui.profile.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile">
+        <action
+            android:id="@+id/action_profile_to_details"
+            app:destination="@id/itemDetailsFragment" />
+        <action
+            android:id="@+id/action_profile_to_editProfile"
+            app:destination="@id/editProfileFragment" />
+        <action
+            android:id="@+id/action_profile_to_auth"
+            app:destination="@id/authFragment"
+            app:popUpTo="@id/nav_graph"
+            app:popUpToInclusive="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.example.closetmarket.ui.details.ItemDetailsFragment"
+        android:label="Item Details"
+        tools:layout="@layout/fragment_item_details">
+        <argument
+            android:name="itemId"
+            app:argType="string" />
+        <action
+            android:id="@+id/action_details_to_editPost"
+            app:destination="@id/createPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/editProfileFragment"
+        android:name="com.example.closetmarket.ui.profile.EditProfileFragment"
+        android:label="Edit Profile"
+        tools:layout="@layout/fragment_edit_profile" />
+
 </navigation>
 
