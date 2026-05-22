@@ -25,25 +25,29 @@ class EditProfileViewModel : ViewModel() {
         _isLoading.value = true
         if (imageBitmap != null) {
             ImageRepository.uploadImage(imageBitmap, "profiles") { imageUrl ->
-                UserRepository.updateProfile(name, imageUrl) { success ->
-                    _isLoading.value = false
-                    if (success) {
-                        _saveSuccess.value = true
-                    } else {
-                        _errorMessage.value = "Failed to update profile"
+                if (imageUrl != null) {
+                    UserRepository.updateProfile(name, imageUrl) { success ->
+                        _isLoading.postValue(false)
+                        if (success) {
+                            _saveSuccess.postValue(true)
+                        } else {
+                            _errorMessage.postValue("Failed to update profile")
+                        }
                     }
+                } else {
+                    _isLoading.postValue(false)
+                    _errorMessage.postValue("Failed to upload image")
                 }
             }
         } else {
             UserRepository.updateProfile(name, null) { success ->
-                _isLoading.value = false
+                _isLoading.postValue(false)
                 if (success) {
-                    _saveSuccess.value = true
+                    _saveSuccess.postValue(true)
                 } else {
-                    _errorMessage.value = "Failed to update profile"
+                    _errorMessage.postValue("Failed to update profile")
                 }
             }
         }
     }
 }
-
