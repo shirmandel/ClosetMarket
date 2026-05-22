@@ -101,7 +101,8 @@ class ItemDetailsFragment : Fragment() {
 
         btnEdit.setOnClickListener {
             val bundle = Bundle().apply { putString("editItemId", itemId) }
-           // navigate to edit item screen
+            Navigation.findNavController(view)
+                .navigate(R.id.action_details_to_editPost, bundle)
         }
 
         btnDelete.setOnClickListener {
