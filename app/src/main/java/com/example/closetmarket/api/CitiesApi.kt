@@ -19,4 +19,3 @@ interface CitiesApi {
     @POST("v0.1/countries/cities")
     fun getCities(@Body request: CitiesRequest = CitiesRequest()): Call<CitiesResponse>
 }
-
