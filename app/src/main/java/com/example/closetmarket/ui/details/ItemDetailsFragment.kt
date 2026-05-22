@@ -20,6 +20,8 @@ import com.squareup.picasso.Picasso
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import com.example.closetmarket.model.ClothingItem
+
 
 class ItemDetailsFragment : Fragment() {
 
