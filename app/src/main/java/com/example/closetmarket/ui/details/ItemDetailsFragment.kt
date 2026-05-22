@@ -17,10 +17,6 @@ import androidx.navigation.Navigation
 import com.example.closetmarket.R
 import com.example.closetmarket.repository.UserRepository
 import com.squareup.picasso.Picasso
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
-import com.example.closetmarket.model.ClothingItem
 
 
 class ItemDetailsFragment : Fragment() {
@@ -85,8 +81,7 @@ class ItemDetailsFragment : Fragment() {
                 tvUserInitial.text = item.userName.first().uppercase()
             }
 
-            val dateFormat = SimpleDateFormat("MMM dd, yyyy", Locale.getDefault())
-            tvUploadDate.text = dateFormat.format(Date(item.lastUpdated ?: System.currentTimeMillis()))
+            tvUploadDate.text = item.uploadDate
 
             if (item.imageUrl.isNotEmpty()) {
                 Picasso.get().load(item.imageUrl)
