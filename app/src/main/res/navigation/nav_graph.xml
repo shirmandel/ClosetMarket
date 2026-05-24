@@ -71,6 +71,16 @@
     </fragment>
 
     <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.example.closetmarket.ui.wishlist.WishlistFragment"
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist">
+        <action
+            android:id="@+id/action_wishlist_to_details"
+            app:destination="@id/itemDetailsFragment" />
+    </fragment>
+
+    <fragment
         android:id="@+id/editProfileFragment"
         android:name="com.example.closetmarket.ui.profile.EditProfileFragment"
         android:label="Edit Profile"

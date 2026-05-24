@@ -57,6 +57,7 @@
     <string name="my_items">My Items</string>
     <string name="no_items_yet">No items yet</string>
     <string name="start_posting">Start posting your items to share with others!</string>
+    <string name="items_saved">%1$d items saved</string>
 
 
 </resources>
