@@ -8,6 +8,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
+import android.widget.AutoCompleteTextView
 import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
@@ -24,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.Navigation
 import com.example.closetmarket.R
+import com.example.closetmarket.repository.LocationRepository
 import com.example.closetmarket.repository.UserRepository
 import com.squareup.picasso.Picasso
 
@@ -36,6 +38,7 @@ class CreatePostFragment : Fragment() {
     private var existingImageUrl: String? = null
     private var editItemId: String? = null
     private var selectedCondition = "used"
+    private var selectedCity = ""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -97,8 +100,7 @@ class CreatePostFragment : Fragment() {
         val btnCondUsed = view.findViewById<Button>(R.id.btnCondUsed)
         val cbFree = view.findViewById<CheckBox>(R.id.cbFree)
         val etPrice = view.findViewById<EditText>(R.id.etPrice)
-        val spinnerCity = view.findViewById<Spinner>(R.id.spinnerCity)
-        val etStreet = view.findViewById<EditText>(R.id.etStreet)
+        val etCity = view.findViewById<AutoCompleteTextView>(R.id.etCity)
         val progressBar = view.findViewById<ProgressBar>(R.id.progressBar)
 
         // Category spinner
@@ -108,16 +110,30 @@ class CreatePostFragment : Fragment() {
         )
         spinnerCategory.adapter = categoryAdapter
 
-        // City spinner
-        val cities = resources.getStringArray(R.array.cities_array)
-        val cityList = mutableListOf(getString(R.string.select_city))
-        cityList.addAll(cities)
-        val cityAdapter = ArrayAdapter(
+        // City autocomplete — load all cities from Nominatim API, filter locally
+        val cityAdapter = ArrayAdapter<String>(
             requireContext(),
-            android.R.layout.simple_spinner_dropdown_item,
-            cityList
+            android.R.layout.simple_dropdown_item_1line
         )
-        spinnerCity.adapter = cityAdapter
+        etCity.setAdapter(cityAdapter)
+
+        // Load cities from API (cached after first call)
+        LocationRepository.loadAllCities { cities ->
+            cityAdapter.clear()
+            cityAdapter.addAll(cities)
+            cityAdapter.notifyDataSetChanged()
+        }
+
+        // When user taps the field, show all options
+        etCity.setOnFocusChangeListener { _, hasFocus ->
+            if (hasFocus && cityAdapter.count > 0) {
+                etCity.showDropDown()
+            }
+        }
+
+        etCity.setOnItemClickListener { _, _, position, _ ->
+            selectedCity = cityAdapter.getItem(position) ?: ""
+        }
 
         // Condition buttons
         fun updateConditionButtons() {
@@ -169,7 +185,8 @@ class CreatePostFragment : Fragment() {
                 if (item != null) {
                     etTitle.setText(item.title)
                     etDescription.setText(item.description)
-                    etStreet.setText(item.street)
+                    etCity.setText(item.city)
+                    selectedCity = item.city
                     existingImageUrl = item.imageUrl
                     selectedCondition = item.condition
                     updateConditionButtons()
@@ -186,10 +203,6 @@ class CreatePostFragment : Fragment() {
                         imagePlaceholder.visibility = View.GONE
                     }
 
-                    // Set city spinner
-                    val cityIndex = cityList.indexOf(item.city)
-                    if (cityIndex >= 0) spinnerCity.setSelection(cityIndex)
-
                     // Set category spinner
                     val catValues = resources.getStringArray(R.array.categories_values_array)
                     val catIndex = catValues.indexOf(item.category)
@@ -204,13 +217,15 @@ class CreatePostFragment : Fragment() {
             val category = spinnerCategory.selectedItem?.toString()?.lowercase() ?: "tops"
             val price = etPrice.text.toString().trim()
             val isFree = cbFree.isChecked
-            val city = spinnerCity.selectedItem?.toString() ?: ""
-            val street = etStreet.text.toString().trim()
+            val cityText = etCity.text.toString().trim()
 
-            if (title.isEmpty() || description.isEmpty() || city == getString(R.string.select_city) || street.isEmpty()) {
+            if (title.isEmpty() || description.isEmpty() || cityText.isEmpty()) {
                 Toast.makeText(requireContext(), "Please fill all required fields", Toast.LENGTH_SHORT).show()
                 return@setOnClickListener
             }
+
+            val city = selectedCity.ifEmpty { cityText }
+            val street = ""
 
             val user = UserRepository.getCurrentUser()
             if (user == null) {
@@ -238,6 +253,11 @@ class CreatePostFragment : Fragment() {
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
             progressBar.visibility = if (isLoading) View.VISIBLE else View.GONE
             btnPost.isEnabled = !isLoading
+            if (isLoading) {
+                btnPost.text = ""
+            } else {
+                btnPost.text = if (editItemId != null) getString(R.string.save) else getString(R.string.post)
+            }
         }
 
         viewModel.postSuccess.observe(viewLifecycleOwner) { success ->

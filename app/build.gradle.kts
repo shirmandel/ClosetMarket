@@ -57,6 +57,11 @@ dependencies {
     // Picasso (image loading)
     implementation(libs.picasso)
 
+    // Retrofit + Gson
+    implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.gson)
+    implementation(libs.gson)
+
     // SwipeRefreshLayout
     implementation(libs.androidx.swiperefreshlayout)
 

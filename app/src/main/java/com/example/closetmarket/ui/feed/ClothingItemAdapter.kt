@@ -73,11 +73,10 @@ class ClothingItemAdapter : RecyclerView.Adapter<ClothingItemAdapter.ItemViewHol
             titleText.text = item.title
             priceText.text = if (item.price == "free") "Free" else "₪${item.price}"
             descriptionText.text = item.description
-            locationText.text = "${item.city}, ${item.street}"
-            userNameText.text = "by ${item.userName}"
+            locationText.text = item.city
+            userNameText.text = " by ${item.userName}"
             dateText.text = item.uploadDate
 
-            // Condition badge
             conditionBadge.text = when (item.condition) {
                 "like-new" -> "Like New"
                 else -> item.condition.replaceFirstChar { it.uppercase() }
@@ -90,13 +89,11 @@ class ClothingItemAdapter : RecyclerView.Adapter<ClothingItemAdapter.ItemViewHol
             }
             conditionBadge.setBackgroundResource(conditionBg)
 
-            // Wishlist icon
             wishlistBtn.setImageResource(
                 if (item.isWishlisted) R.drawable.ic_heart_filled
                 else R.drawable.ic_heart_outline
             )
 
-            // Load image with Picasso
             if (item.imageUrl.isNotEmpty()) {
                 Picasso.get()
                     .load(item.imageUrl)

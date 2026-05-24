@@ -36,7 +36,13 @@ class EditProfileFragment : Fragment() {
         ) { bitmap ->
             if (bitmap != null) {
                 selectedImageBitmap = bitmap
-                view?.findViewById<ImageView>(R.id.ivProfileImage)?.setImageBitmap(bitmap)
+                view?.findViewById<ImageView>(R.id.ivProfileImage)?.apply {
+                    setPadding(0, 0, 0, 0)
+                    imageTintList = null
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                    clipToOutline = true
+                    setImageBitmap(bitmap)
+                }
             }
         }
 
@@ -44,8 +50,12 @@ class EditProfileFragment : Fragment() {
             ActivityResultContracts.GetContent()
         ) { uri ->
             uri?.let {
-                view?.findViewById<ImageView>(R.id.ivProfileImage)?.let { iv ->
-                    Picasso.get().load(uri).into(iv)
+                view?.findViewById<ImageView>(R.id.ivProfileImage)?.apply {
+                    setPadding(0, 0, 0, 0)
+                    imageTintList = null
+                    scaleType = ImageView.ScaleType.CENTER_CROP
+                    clipToOutline = true
+                    Picasso.get().load(uri).into(this)
                 }
                 selectedImageBitmap = MediaStore.Images.Media.getBitmap(
                     requireActivity().contentResolver, uri
@@ -76,21 +86,16 @@ class EditProfileFragment : Fragment() {
         if (user != null) {
             etName.setText(user.displayName)
             if (user.profileImageUrl.isNotEmpty()) {
+                ivProfileImage.setPadding(0, 0, 0, 0)
+                ivProfileImage.imageTintList = null
+                ivProfileImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                ivProfileImage.clipToOutline = true
                 Picasso.get().load(user.profileImageUrl).into(ivProfileImage)
             }
         }
 
-        btnChangePhoto.setOnClickListener {
-            AlertDialog.Builder(requireContext())
-                .setTitle(getString(R.string.choose_image_source))
-                .setItems(arrayOf(getString(R.string.camera), getString(R.string.gallery))) { _, which ->
-                    when (which) {
-                        0 -> cameraLauncher.launch(null)
-                        1 -> galleryLauncher.launch("image/*")
-                    }
-                }
-                .show()
-        }
+        btnChangePhoto.setOnClickListener { showImageChooser() }
+        ivProfileImage.setOnClickListener { showImageChooser() }
 
         btnSave.setOnClickListener {
             val name = etName.text.toString().trim()
@@ -118,6 +123,18 @@ class EditProfileFragment : Fragment() {
                 Toast.makeText(requireContext(), error, Toast.LENGTH_SHORT).show()
             }
         }
+    }
+
+    private fun showImageChooser() {
+        AlertDialog.Builder(requireContext())
+            .setTitle(getString(R.string.choose_image_source))
+            .setItems(arrayOf(getString(R.string.camera), getString(R.string.gallery))) { _, which ->
+                when (which) {
+                    0 -> cameraLauncher.launch(null)
+                    1 -> galleryLauncher.launch("image/*")
+                }
+            }
+            .show()
     }
 }
 

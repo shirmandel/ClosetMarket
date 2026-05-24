@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">ClosetMarket</string>
     <string name="tagline">Buy and sell from your closet</string>
+    <string name="change_photo">Change Photo</string>
     <string name="login">Login</string>
     <string name="sign_up">Sign Up</string>
     <string name="full_name">Full Name</string>
@@ -27,6 +28,8 @@
     <string name="free_give_away">Free (give away)</string>
     <string name="pickup_location">Pickup Location</string>
     <string name="street_hint">Street address</string>
+    <string name="city_hint">Search city…</string>
+    <string name="location_hint">Search for address…</string>
     <string name="select_city">Select City</string>
     <string name="edit_post">Edit Post</string>
     <string name="save">Save</string>
@@ -44,7 +47,7 @@
     <string name="edit">Edit</string>
     <string name="delete">Delete</string>
     <string name="contact_seller">Contact Seller</string>
-    <string name="free_label">Free label</string>
+    <string name="free_label">Free</string>
     <string name="contact_seller_msg">Contact seller</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="logout">Logout</string>

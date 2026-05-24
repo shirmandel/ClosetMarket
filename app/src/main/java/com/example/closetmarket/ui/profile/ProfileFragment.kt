@@ -73,6 +73,10 @@ class ProfileFragment : Fragment() {
                 tvUserName.text = user.displayName
                 tvUserEmail.text = user.email
                 if (user.profileImageUrl.isNotEmpty()) {
+                    ivProfileImage.setPadding(0, 0, 0, 0)
+                    ivProfileImage.imageTintList = null
+                    ivProfileImage.scaleType = ImageView.ScaleType.CENTER_CROP
+                    ivProfileImage.clipToOutline = true
                     Picasso.get()
                         .load(user.profileImageUrl)
                         .placeholder(R.drawable.bg_circle_purple)

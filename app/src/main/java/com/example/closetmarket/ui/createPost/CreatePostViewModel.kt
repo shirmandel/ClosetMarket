@@ -62,8 +62,8 @@ class CreatePostViewModel : ViewModel() {
                     saveItem(itemId, title, description, category, condition, finalPrice,
                         city, street, imageUrl, userId, userName, uploadDate, editItemId != null)
                 } else {
-                    _isLoading.value = false
-                    _errorMessage.value = "Failed to upload image"
+                    _isLoading.postValue(false)
+                    _errorMessage.postValue("Failed to upload image")
                 }
             }
         } else {
@@ -96,11 +96,11 @@ class CreatePostViewModel : ViewModel() {
         )
 
         val callback: (Boolean) -> Unit = { success ->
-            _isLoading.value = false
+            _isLoading.postValue(false)
             if (success) {
-                _postSuccess.value = true
+                _postSuccess.postValue(true)
             } else {
-                _errorMessage.value = "Failed to save item"
+                _errorMessage.postValue("Failed to save item")
             }
         }
 
