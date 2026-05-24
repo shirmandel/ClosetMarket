@@ -58,6 +58,9 @@
     <string name="no_items_yet">No items yet</string>
     <string name="start_posting">Start posting your items to share with others!</string>
     <string name="items_saved">%1$d items saved</string>
+    <string name="wishlist_empty">Your wishlist is empty</string>
+    <string name="save_items_hint">Save items to your wishlist to find them later</string>
+    <string name="seller_no_email">Seller has no email</string>
 
 
 </resources>

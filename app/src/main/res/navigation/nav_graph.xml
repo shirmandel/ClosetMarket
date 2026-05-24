@@ -26,6 +26,10 @@
             android:id="@+id/action_feed_to_details"
             app:destination="@id/itemDetailsFragment" />
 
+        <action
+            android:id="@+id/action_feed_to_wishlist"
+            app:destination="@id/wishlistFragment" />
+
     </fragment>
 
     <fragment
