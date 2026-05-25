@@ -5,8 +5,6 @@ import android.util.Log
 import com.example.closetmarket.model.User
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.auth.UserProfileChangeRequest
-import kotlin.apply
-import kotlin.run
 
 object UserRepository {
     private const val TAG = "UserRepository"
@@ -27,9 +25,7 @@ object UserRepository {
 
     fun login(email: String, password: String, callback: (Boolean, String?) -> Unit) {
         auth.signInWithEmailAndPassword(email, password)
-            .addOnSuccessListener {
-                callback(true, null)
-            }
+            .addOnSuccessListener { callback(true, null) }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Login failed: ${e.message}")
                 callback(false, e.message)
@@ -44,12 +40,8 @@ object UserRepository {
                     .setDisplayName(name)
                     .build()
                 firebaseUser?.updateProfile(profileUpdates)
-                    ?.addOnSuccessListener {
-                        callback(true, null)
-                    }
-                    ?.addOnFailureListener {
-                        callback(true, null)
-                    }
+                    ?.addOnSuccessListener { callback(true, null) }
+                    ?.addOnFailureListener { callback(true, null) }
             }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Register failed: ${e.message}")
@@ -62,24 +54,18 @@ object UserRepository {
     }
 
     fun updateProfile(name: String, imageUrl: String?, callback: (Boolean) -> Unit) {
-        val user = auth.currentUser ?: run {
+        val user = auth.currentUser
+        if (user == null) {
             callback(false)
             return
         }
-
         val profileUpdates = UserProfileChangeRequest.Builder()
             .setDisplayName(name)
-            .apply {
-                if (imageUrl != null) {
-                    setPhotoUri(Uri.parse(imageUrl))
-                }
-            }
+            .apply { if (imageUrl != null) setPhotoUri(Uri.parse(imageUrl)) }
             .build()
 
         user.updateProfile(profileUpdates)
-            .addOnSuccessListener {
-                callback(true)
-            }
+            .addOnSuccessListener { callback(true) }
             .addOnFailureListener { e ->
                 Log.e(TAG, "Profile update failed: ${e.message}")
                 callback(false)

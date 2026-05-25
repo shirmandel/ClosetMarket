@@ -246,6 +246,7 @@ class CreatePostFragment : Fragment() {
                 existingImageUrl = existingImageUrl,
                 userId = user.uid,
                 userName = user.displayName,
+                userEmail = user.email,
                 editItemId = editItemId
             )
         }

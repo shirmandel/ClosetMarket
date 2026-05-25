@@ -26,6 +26,10 @@
             android:id="@+id/action_feed_to_details"
             app:destination="@id/itemDetailsFragment" />
 
+        <action
+            android:id="@+id/action_feed_to_wishlist"
+            app:destination="@id/wishlistFragment" />
+
     </fragment>
 
     <fragment
@@ -68,6 +72,16 @@
         <action
             android:id="@+id/action_details_to_editPost"
             app:destination="@id/createPostFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/wishlistFragment"
+        android:name="com.example.closetmarket.ui.wishlist.WishlistFragment"
+        android:label="Wishlist"
+        tools:layout="@layout/fragment_wishlist">
+        <action
+            android:id="@+id/action_wishlist_to_details"
+            app:destination="@id/itemDetailsFragment" />
     </fragment>
 
     <fragment

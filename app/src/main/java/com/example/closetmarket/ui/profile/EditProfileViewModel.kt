@@ -28,11 +28,8 @@ class EditProfileViewModel : ViewModel() {
                 if (imageUrl != null) {
                     UserRepository.updateProfile(name, imageUrl) { success ->
                         _isLoading.postValue(false)
-                        if (success) {
-                            _saveSuccess.postValue(true)
-                        } else {
-                            _errorMessage.postValue("Failed to update profile")
-                        }
+                        if (success) _saveSuccess.postValue(true)
+                        else _errorMessage.postValue("Failed to update profile")
                     }
                 } else {
                     _isLoading.postValue(false)
@@ -42,11 +39,8 @@ class EditProfileViewModel : ViewModel() {
         } else {
             UserRepository.updateProfile(name, null) { success ->
                 _isLoading.postValue(false)
-                if (success) {
-                    _saveSuccess.postValue(true)
-                } else {
-                    _errorMessage.postValue("Failed to update profile")
-                }
+                if (success) _saveSuccess.postValue(true)
+                else _errorMessage.postValue("Failed to update profile")
             }
         }
     }

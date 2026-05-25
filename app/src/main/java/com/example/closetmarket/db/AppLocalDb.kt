@@ -7,7 +7,7 @@ import com.example.closetmarket.base.MyApplication
 import com.example.closetmarket.model.ClothingItem
 import kotlin.jvm.java
 
-@Database(entities = [ClothingItem::class], version = 1)
+@Database(entities = [ClothingItem::class], version = 2)
 abstract class AppLocalDbRepository : RoomDatabase() {
     abstract fun clothingItemDao(): ClothingItemDao
 }

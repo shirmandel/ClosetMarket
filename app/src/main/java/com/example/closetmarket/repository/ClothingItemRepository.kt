@@ -161,6 +161,7 @@ object ClothingItemRepository {
         "street" to item.street,
         "userId" to item.userId,
         "userName" to item.userName,
+        "userEmail" to item.userEmail,
         "uploadDate" to item.uploadDate,
         "lastUpdated" to item.lastUpdated
     )

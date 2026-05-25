@@ -45,6 +45,7 @@ class CreatePostViewModel : ViewModel() {
         existingImageUrl: String?,
         userId: String,
         userName: String,
+        userEmail: String,
         editItemId: String?
     ) {
         _isLoading.value = true
@@ -60,7 +61,7 @@ class CreatePostViewModel : ViewModel() {
             ImageRepository.uploadImage(imageBitmap, "items") { imageUrl ->
                 if (imageUrl != null) {
                     saveItem(itemId, title, description, category, condition, finalPrice,
-                        city, street, imageUrl, userId, userName, uploadDate, editItemId != null)
+                        city, street, imageUrl, userId, userName, userEmail, uploadDate, editItemId != null)
                 } else {
                     _isLoading.postValue(false)
                     _errorMessage.postValue("Failed to upload image")
@@ -69,7 +70,7 @@ class CreatePostViewModel : ViewModel() {
         } else {
             val imageUrl = existingImageUrl ?: ""
             saveItem(itemId, title, description, category, condition, finalPrice,
-                city, street, imageUrl, userId, userName, uploadDate, editItemId != null)
+                city, street, imageUrl, userId, userName, userEmail, uploadDate, editItemId != null)
         }
     }
 
@@ -77,7 +78,7 @@ class CreatePostViewModel : ViewModel() {
         id: String, title: String, description: String,
         category: String, condition: String, price: String,
         city: String, street: String, imageUrl: String,
-        userId: String, userName: String, uploadDate: String,
+        userId: String, userName: String, userEmail: String, uploadDate: String,
         isEdit: Boolean
     ) {
         val item = ClothingItem(
@@ -92,6 +93,7 @@ class CreatePostViewModel : ViewModel() {
             street = street,
             userId = userId,
             userName = userName,
+            userEmail = userEmail,
             uploadDate = uploadDate
         )
 

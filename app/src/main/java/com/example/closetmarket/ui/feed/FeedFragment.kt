@@ -145,8 +145,9 @@ class FeedFragment : Fragment() {
             applyFilters(tvResultsCount, emptyState, recyclerView)
         }
 
-        // Wishlist button
-//      todo: navigate to wishlist
+        btnWishlist.setOnClickListener {
+            Navigation.findNavController(view).navigate(R.id.action_feed_to_wishlist)
+        }
 
         viewModel.refreshData()
     }

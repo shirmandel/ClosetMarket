@@ -1,5 +1,7 @@
 package com.example.closetmarket.ui.details
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -110,7 +112,17 @@ class ItemDetailsFragment : Fragment() {
         }
 
         btnContactSeller.setOnClickListener {
-            Toast.makeText(requireContext(), getString(R.string.contact_seller_msg), Toast.LENGTH_SHORT).show()
+            val item = viewModel.item.value
+            val email = item?.userEmail.orEmpty()
+            if (email.isEmpty()) {
+                Toast.makeText(requireContext(), getString(R.string.seller_no_email), Toast.LENGTH_SHORT).show()
+                return@setOnClickListener
+            }
+            val intent = Intent(Intent.ACTION_SENDTO).apply {
+                data = Uri.parse("mailto:$email")
+                putExtra(Intent.EXTRA_SUBJECT, "About your item: ${item?.title ?: ""}")
+            }
+            startActivity(intent)
         }
 
         viewModel.isLoading.observe(viewLifecycleOwner) { isLoading ->
