@@ -27,10 +27,6 @@ object ClothingItemRepository {
         return localDb.getWishlistedItems()
     }
 
-    /**
-     * Delta sync: pull items from Firestore that were updated since last sync,
-     * insert them into Room, then update the last-sync timestamp.
-     */
     fun refreshItems(callback: (() -> Unit)? = null) {
         val context = MyApplication.Globals.appContext ?: run {
             callback?.invoke()
@@ -71,7 +67,6 @@ object ClothingItemRepository {
     fun addItem(item: ClothingItem, callback: (Boolean) -> Unit) {
         val itemWithTimestamp = item.copy(lastUpdated = System.currentTimeMillis() / 1000)
 
-        // Save to Firestore first, then to local Room on success
         firestore.collection(COLLECTION)
             .document(item.id)
             .set(itemToMap(itemWithTimestamp))
@@ -145,10 +140,6 @@ object ClothingItemRepository {
         }
     }
 
-    /**
-     * Convert ClothingItem to a Map for Firestore.
-     * We exclude isWishlisted since that's a local-only field.
-     */
     private fun itemToMap(item: ClothingItem): Map<String, Any?> = mapOf(
         "id" to item.id,
         "title" to item.title,
