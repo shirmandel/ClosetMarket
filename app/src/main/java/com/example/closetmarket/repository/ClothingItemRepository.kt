@@ -1,6 +1,5 @@
 package com.example.closetmarket.repository
 
-import android.content.Context
 import android.util.Log
 import androidx.lifecycle.LiveData
 import com.example.closetmarket.base.MyApplication
@@ -10,8 +9,6 @@ import com.google.firebase.firestore.FirebaseFirestore
 
 object ClothingItemRepository {
     private const val TAG = "ClothingItemRepo"
-    private const val PREFS_NAME = "closetmarket_prefs"
-    private const val LAST_UPDATED_KEY = "last_updated"
     private const val COLLECTION = "clothingItems"
 
     private val localDb = AppLocalDb.db.clothingItemDao()
@@ -28,34 +25,34 @@ object ClothingItemRepository {
     }
 
     fun refreshItems(callback: (() -> Unit)? = null) {
-        val context = MyApplication.Globals.appContext ?: run {
-            callback?.invoke()
-            return
-        }
-        val prefs = context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-        val lastUpdated = prefs.getLong(LAST_UPDATED_KEY, 0L)
-
         firestore.collection(COLLECTION)
-            .whereGreaterThan("lastUpdated", lastUpdated)
             .get()
             .addOnSuccessListener { snapshot ->
                 MyApplication.Globals.executorService.execute {
-                    var maxTimestamp = lastUpdated
+                    val remoteIds = HashSet<String>()
                     for (doc in snapshot.documents) {
                         val item = doc.toObject(ClothingItem::class.java)
-                        if (item != null) {
-                            localDb.insert(item)
-                            val ts = item.lastUpdated ?: 0L
-                            if (ts > maxTimestamp) maxTimestamp = ts
+                        if (item != null && item.id.isNotEmpty()) {
+
+                            val existing = localDb.getItemById(item.id)
+                            val merged = if (existing != null)
+                                item.copy(isWishlisted = existing.isWishlisted)
+                            else item
+                            localDb.insert(merged)
+                            remoteIds.add(item.id)
                         }
                     }
-                    if (maxTimestamp > lastUpdated) {
-                        prefs.edit().putLong(LAST_UPDATED_KEY, maxTimestamp).apply()
+
+                    val localItems = localDb.getAllItemsSync()
+                    var pruned = 0
+                    for (local in localItems) {
+                        if (local.id !in remoteIds) {
+                            localDb.deleteById(local.id)
+                            pruned++
+                        }
                     }
-                    Log.d(TAG, "Synced ${snapshot.size()} items from Firestore")
-                    MyApplication.Globals.mainHandler.post {
-                        callback?.invoke()
-                    }
+                    Log.d(TAG, "Synced ${snapshot.size()} items; pruned $pruned stale")
+                    MyApplication.Globals.mainHandler.post { callback?.invoke() }
                 }
             }
             .addOnFailureListener { e ->
