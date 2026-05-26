@@ -162,7 +162,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_input"
                     android:text="@string/condition_new"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
 
                 <Button
                     android:id="@+id/btnCondLikeNew"
@@ -173,7 +173,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_input"
                     android:text="@string/condition_like_new"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
 
                 <Button
                     android:id="@+id/btnCondUsed"
@@ -183,7 +183,7 @@
                     android:layout_weight="1"
                     android:background="@drawable/bg_input"
                     android:text="@string/condition_used"
-                    android:textSize="13sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <TextView
